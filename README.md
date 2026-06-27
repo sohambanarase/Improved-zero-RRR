@@ -1,11 +1,24 @@
 # Improved-zero-RRR
 
+> Project Seminar: *Reproduce Research Results* — FAU Erlangen-Nürnberg
+
 Reproduction of results from the paper **"Improved Zero-Shot Classification by Adapting VLMs with Text Descriptions"** (CVPR 2024).
 
 📄 Paper: [Improved Zero-Shot Classification by Adapting VLMs with Text Descriptions](https://openaccess.thecvf.com/content/CVPR2024/html/Saha_Improved_ZeroShot_Classification_by_Adapting_VLMs_with_Text_Descriptions_CVPR_2024_paper.html)
 💻 Original repo: [cvl-umass/AdaptCLIPZS](https://github.com/cvl-umass/AdaptCLIPZS)
 
-The paper adapts CLIP models using GPT-generated textual descriptions to improve zero-shot classification. This reproduction focuses on the **CUB-200-2011** dataset, using a pre-trained checkpoint, and compares the reproduced result against the number reported in the original paper.
+---
+
+## About this project
+
+This repository documents a **reproduction** of the paper above, carried out as part of the *Project Seminar: Reproduce Research Results* at **FAU Erlangen-Nürnberg**. The seminar's premise is straightforward: take a published ML paper and independently reproduce its reported results, rather than conduct new research. The work here is a reproduction effort, not an original contribution.
+
+The goals of this specific reproduction were to:
+- **Practice the end-to-end workflow** of reproducing a deep learning paper — setting up the environment, acquiring the dataset, downloading provided checkpoints, and running the original evaluation code.
+- **Verify the paper's reported numbers**, specifically the `CLIP_FT + A` accuracy in Table 1, by independently re-running inference on the CUB-200-2011 dataset.
+- **Document the process and any friction points** encountered along the way, so the steps here can be a reference for similar reproduction work.
+
+All credit for the underlying method, codebase, and pre-trained checkpoints belongs to the original authors and the maintainers of the [AdaptCLIPZS](https://github.com/cvl-umass/AdaptCLIPZS) repository (see [Acknowledgements](#acknowledgements)). This repo adds only the documentation, environment setup, and run instructions used to reproduce one of their reported results — it introduces no new method or claim of its own.
 
 All steps below were run on **Google Colab**.
 
@@ -20,7 +33,7 @@ All steps below were run on **Google Colab**.
 
 ## 2. Install dependencies
 
-The repo ships an `environment.yml`, but conda environments aren't compatible with Colab, so dependencies are installed manually instead:
+The original repo ships an `environment.yml`, but conda-based environment files aren't compatible with Colab, so dependencies were installed manually instead:
 
 ```bash
 !pip install torch torchvision timm transformers opendatasets matplotlib openai
@@ -98,11 +111,20 @@ We reproduce the **CLIP_FT + A** value reported in Table 1 of the paper for the 
 Accuracy Val = 55.529
 ```
 
-This is within ~0.5 points of the paper's reported 56.01, which is a reasonably close match given normal run-to-run variance (e.g. preprocessing/data ordering, library versions).
+This lands within ~0.5 points of the paper's reported 56.01 for the same checkpoint and architecture.
+
+## 7. Reproduction notes
+
+- The original `environment.yml` could not be used as-is in Colab, requiring a manual, package-by-package dependency install (see Step 2).
+- Only the CUB-200-2011 / ViT-B/16 checkpoint was independently re-run for this seminar project. The iNaturalist21 and NABirds numbers in the table above are quoted directly from the paper for reference and were **not** re-run here.
+- The small gap between the reproduced (55.53) and reported (56.01) accuracy is consistent with normal run-to-run variation rather than a methodological discrepancy, though no controlled re-runs were done to confirm this.
 
 ---
 
-## Notes
+## Acknowledgements
 
-- This reproduction follows the steps and configuration described in the paper and its official repository as closely as possible.
-- Only the CUB-200-2011 dataset / ViT-B/16 checkpoint was evaluated in this run; the iNaturalist21 and NABirds results in the table above are quoted directly from the paper for comparison and were not independently reproduced here.
+This work reproduces results from:
+
+> Saha, O. et al. *Improved Zero-Shot Classification by Adapting VLMs with Text Descriptions.* CVPR 2024.
+
+All credit for the method, model design, and original implementation goes to the paper's authors and the [cvl-umass/AdaptCLIPZS](https://github.com/cvl-umass/AdaptCLIPZS) repository maintainers. This repository exists solely to document a reproduction of their reported results as part of coursework and makes no claim of original research contribution.
